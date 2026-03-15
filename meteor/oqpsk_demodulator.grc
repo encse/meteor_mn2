@@ -90,22 +90,6 @@ blocks:
     coordinate: [280, 200.0]
     rotation: 0
     state: enabled
-- name: blocks_complex_to_float_0
-  id: blocks_complex_to_float
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [808, 468.0]
-    rotation: 0
-    state: enabled
 - name: blocks_complex_to_float_0_0
   id: blocks_complex_to_float
   parameters:
@@ -156,25 +140,6 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [408, 468.0]
-    rotation: 0
-    state: enabled
-- name: blocks_interleave_0
-  id: blocks_interleave
-  parameters:
-    affinity: ''
-    alias: ''
-    blocksize: '1'
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    num_streams: '2'
-    type: float
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [944, 468.0]
     rotation: 0
     state: enabled
 - name: blocks_multiply_const_vxx_0
@@ -352,13 +317,13 @@ blocks:
     label: soft_symbols
     num_streams: '1'
     optional: 'False'
-    type: float
+    type: complex
     vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1064, 484.0]
+    coordinate: [808, 484.0]
     rotation: 0
     state: enabled
 - name: pad_sink_1
@@ -499,22 +464,19 @@ blocks:
 
 connections:
 - [analog_agc2_xx_0, '0', fir_filter_xxx_1, '0']
-- [blocks_complex_to_float_0, '0', blocks_interleave_0, '0']
-- [blocks_complex_to_float_0, '1', blocks_interleave_0, '1']
 - [blocks_complex_to_float_0_0, '0', blocks_float_to_complex_0_0, '0']
 - [blocks_complex_to_float_0_0, '1', blocks_delay_0_0, '0']
 - [blocks_delay_0_0, '0', blocks_float_to_complex_0_0, '1']
 - [blocks_float_to_complex_0_0, '0', digital_symbol_sync_xx_0, '0']
-- [blocks_interleave_0, '0', pad_sink_0_0, '0']
 - [blocks_multiply_const_vxx_0, '0', pad_sink_1, '0']
 - [digital_costas_loop_cc_0, '0', virtual_sink_0, '0']
 - [digital_costas_loop_cc_0, '1', blocks_multiply_const_vxx_0, '0']
 - [digital_costas_loop_cc_0, '2', blocks_null_sink_0, '0']
 - [digital_costas_loop_cc_0, '3', blocks_null_sink_0_0, '0']
 - [digital_mpsk_snr_est_cc_0, '0', tag_value_to_float_0, '0']
-- [digital_symbol_sync_xx_0, '0', blocks_complex_to_float_0, '0']
 - [digital_symbol_sync_xx_0, '0', digital_mpsk_snr_est_cc_0, '0']
 - [digital_symbol_sync_xx_0, '0', pad_sink_0, '0']
+- [digital_symbol_sync_xx_0, '0', pad_sink_0_0, '0']
 - [fir_filter_xxx_1, '0', digital_costas_loop_cc_0, '0']
 - [pad_source_1, '0', rational_resampler_xxx_0, '0']
 - [rational_resampler_xxx_0, '0', analog_agc2_xx_0, '0']

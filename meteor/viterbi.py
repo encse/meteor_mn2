@@ -19,21 +19,21 @@ def ndarray_to_capsule(arr):
 
 class Viterbi(gr.basic_block):
 
-    BLOCK_SOFT = 2048
-    BLOCK_BITS = BLOCK_SOFT // 2
+    BLOCK_BITS = 1024
+    BLOCK_SOFT = BLOCK_BITS * 2
 
     def __init__(self):
 
         gr.basic_block.__init__(
             self,
             name="viterbi",
-            in_sig=[np.float32],
+            in_sig=[np.complex64],
             out_sig=[np.uint8, np.float32],
         )
 
-        self.set_output_multiple(self.BLOCK_BITS)
-
         polys = [109,79]
+
+        self.iq_interleaved = np.zeros(self.BLOCK_SOFT, dtype=np.float32)
 
         self.dec = fec.cc_decoder.make(
             self.BLOCK_BITS,7,2,polys,0,-1,fec.CC_STREAMING,False
@@ -50,6 +50,8 @@ class Viterbi(gr.basic_block):
             raise RuntimeError("Decoder history is invalid")
 
         # buffers
+
+        self.iq_interleaved = np.zeros(self.BLOCK_SOFT, dtype=np.float32)
 
         self.soft_float = np.zeros(self.history_overlap + self.BLOCK_SOFT, dtype=np.float32)
         self.soft_u8 = np.zeros(self.history_overlap + self.BLOCK_SOFT, dtype=np.uint8)
@@ -89,11 +91,11 @@ class Viterbi(gr.basic_block):
 
     def general_work(self, input_items, output_items):
 
-        soft_in = input_items[0]
+        iq_in = input_items[0]
         bits_out = output_items[0]
         ber_out = output_items[1]
 
-        if len(soft_in) < self.BLOCK_SOFT:
+        if len(iq_in) < self.BLOCK_BITS:
             return 0
 
         if len(bits_out) < self.BLOCK_BITS:
@@ -105,21 +107,16 @@ class Viterbi(gr.basic_block):
         # Build one decoder work block:
         # [previous history overlap | new input samples]
         self.soft_float[:self.history_overlap] = self.prev_soft_float
-        self.soft_float[self.history_overlap:] = soft_in[:self.BLOCK_SOFT]
+        self.soft_float[self.history_overlap:][0::2] = iq_in[:self.BLOCK_BITS].real
+        self.soft_float[self.history_overlap:][1::2] = iq_in[:self.BLOCK_BITS].imag
 
         # Convert signed float soft samples to unsigned uchar soft samples
         self.float_to_soft()
 
-        n = self.dec.generic_work(
-            ndarray_to_capsule(self.soft_u8),
-            ndarray_to_capsule(self.decoded)
-        )
+        self.dec.generic_work(self.soft_caps, self.dec_caps)
 
         # Re-encode the decoded bits back to coded form
-        self.enc.generic_work(
-            ndarray_to_capsule(self.decoded),
-            ndarray_to_capsule(self.reencoded)
-        )
+        self.enc.generic_work(self.dec_caps, self.renc_caps)
 
         # Compute BER on the same work block
         ber = self.compute_ber()
@@ -132,6 +129,6 @@ class Viterbi(gr.basic_block):
         if self.history_overlap > 0:
             self.prev_soft_float[:] = self.soft_float[-self.history_overlap:]
 
-        self.consume(0, self.BLOCK_SOFT)
+        self.consume(0, self.BLOCK_BITS)
 
         return self.BLOCK_BITS

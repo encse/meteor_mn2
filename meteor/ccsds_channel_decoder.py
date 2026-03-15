@@ -65,7 +65,7 @@ class ccsds_channel_decoder(gr.hier_block2):
     def __init__(self):
         gr.hier_block2.__init__(
             self, "CCSDS Channel Decoder",
-                gr.io_signature(1, 1, gr.sizeof_float*1),
+                gr.io_signature(1, 1, gr.sizeof_gr_complex*1),
                 gr.io_signature(1, 1, gr.sizeof_float*1),
         )
         self.message_port_register_hier_out("cadus")

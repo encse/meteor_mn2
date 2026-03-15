@@ -6,7 +6,7 @@ parameters: []
 
 inputs:
 -   label: soft_symbols
-    dtype: float
+    dtype: complex
     vlen: 1
 
 outputs:

@@ -126,7 +126,7 @@ blocks:
     minoutbuf: '0'
     num_streams: '1'
     optional: 'False'
-    type: float
+    type: complex
     vlen: '1'
   states:
     bus_sink: false
@@ -172,7 +172,6 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    code: '"NASA-DSN uninverted"'
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'

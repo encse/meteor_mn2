@@ -4,7 +4,7 @@ category: '[GRC Hier Blocks]'
 
 inputs:
 -   label: in
-    dtype: float
+    dtype: complex
     vlen: 1
 
 outputs:

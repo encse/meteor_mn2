@@ -20,7 +20,7 @@ outputs:
     vlen: 1
     optional: true
 -   label: soft_symbols
-    dtype: float
+    dtype: complex
     vlen: 1
 -   label: doppler_hz
     dtype: float

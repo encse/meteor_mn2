@@ -1,6 +1,6 @@
 id: ccsds_image_sink
 label: CCSDS Image Sink
-category: '[Custom]'
+category: '[Meteor]'
 
 templates:
   imports: from ccsds_image_sink import CcsdsImageSink

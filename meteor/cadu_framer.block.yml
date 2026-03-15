@@ -1,6 +1,6 @@
 id: cadu_framer
 label: "CADU framer"
-category: '[my blocks]'
+category: '[Meteor]'
 
 parameters:
 - id: cadu_len_bytes

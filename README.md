@@ -76,7 +76,3 @@ a proper reed-solomon decoder as a wrapper around
 [libfec](https://github.com/daniestevez/gr-satellites/tree/1358c09ee1924b2c407ddc60859ea083add925d8/lib/libfec).
 It would be hard to port this to python, but we will see.
 
-## Known issues
-
-I still need to implement rotation check. If the signal gets locked at ±π/2, the 
-Viterbi algorithm will not work and no meaningful data comes out of the pipeline.

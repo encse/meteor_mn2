@@ -1,22 +1,40 @@
 id: viterbi
 label: Viterbi decoder
-category: '[GRC Hier Blocks]'
+category: '[Meteor]'
+
+documentation: |
+    Convolutional Viterbi decoder for complex baseband streams.
+
+    The input is a complex stream where the real and imaginary parts carry
+    the two soft symbols of a rate-1/2 convolutional code (e.g. G3RUH style
+    I/Q soft metrics).
+
+    To handle a possible 90° constellation rotation, the block performs
+    decoding twice:
+      • once with the samples as received
+      • once with the samples multiplied by 1j
+
+    The decoded result with the lower estimated BER is selected and emitted.
+
+    Outputs:
+      out – decoded bit stream
+      ber – estimated bit error rate for the chosen decoding
 
 inputs:
--   label: in
-    dtype: complex
-    vlen: 1
+- label: in
+  dtype: complex
+  vlen: 1
 
 outputs:
--   label: out
-    dtype: byte
-    vlen: 1
--   label: ber
-    dtype: float
-    vlen: 1
+- label: out
+  dtype: byte
+  vlen: 1
+- label: ber
+  dtype: float
+  vlen: 1
 
 templates:
-    imports: 'from viterbi import Viterbi  # grc-generated hier_block'
-    make: "Viterbi()"
+  imports: 'from viterbi import Viterbi  # grc-generated hier_block'
+  make: "Viterbi()"
 
 file_format: 1

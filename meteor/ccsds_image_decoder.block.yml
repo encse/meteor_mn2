@@ -2,7 +2,7 @@ file_format: 1
 
 id: ccsds_image_decoder
 label: CCSDS Image Decoder
-category: '[CCSDS]'
+category: '[Meteor]'
 
 templates:
   imports: from ccsds_image_decoder import CcsdsImageDecoder

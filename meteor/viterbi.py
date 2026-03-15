@@ -2,7 +2,6 @@ import ctypes
 import numpy as np
 from gnuradio import gr, fec
 
-
 def ndarray_to_capsule(arr):
     """
     Wrap a contiguous numpy array data pointer into a PyCapsule.
@@ -18,8 +17,31 @@ def ndarray_to_capsule(arr):
     return pycapsule_new(ptr, None, None)
 
 class Viterbi(gr.basic_block):
+    """
+    Convolutional Viterbi decoder block for complex baseband inputs.
 
-    BLOCK_BITS = 1024
+    The block consumes complex64 IQ samples where the real and imaginary
+    components represent the two soft symbols of a rate-1/2 convolutional
+    code. For each block it builds a soft-input stream for the GNU Radio
+    FEC Viterbi decoder.
+
+    To tolerate constellation ambiguity (e.g. 90° rotation), decoding is
+    attempted twice:
+        1. using the IQ samples as received
+        2. using the samples multiplied by 1j
+
+    The decoder with the lower estimated BER is selected. The chosen
+    decoded bits are emitted together with the estimated BER.
+
+    Input:
+        complex64 stream (IQ samples)
+
+    Output:
+        uint8  stream – decoded bits
+        float32 stream – BER estimate
+    """
+ 
+    BLOCK_BITS = 4096
     BLOCK_SOFT = BLOCK_BITS * 2
 
     def __init__(self):

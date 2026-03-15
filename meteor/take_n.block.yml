@@ -1,6 +1,6 @@
 id: take_n
 label: "Take N (PDU)"
-category: '[my blocks]'
+category: '[Meteor]'
 
 parameters:
 - id: n

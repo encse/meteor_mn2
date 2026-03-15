@@ -2,7 +2,7 @@ options:
   parameters:
     author: HA7NCS
     catch_exceptions: 'True'
-    category: '[GRC Hier Blocks]'
+    category: '[Meteor]'
     cmake_opt: ''
     comment: "Meteor M-N 2.x LRPT (72k) OQPSK demodulator to process signals \ncaptured\
       \ at 137.9 or 137.1 MHz.\n\nAccepts complex float32 (cf32) IQ input. \n\nSet\
@@ -42,7 +42,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /Users/encse/projects/qpsk/2026-03-07_07-25-06_375000SPS_137900000Hz.cf32
+    file: /Users/encse/projects/qpsk/2026-03-07_13-01-38_187500SPS_137900000Hz.cf32
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -504,7 +504,7 @@ blocks:
     label: Input sample rate
     short_id: ''
     type: intx
-    value: '375000'
+    value: '187500'
   states:
     bus_sink: false
     bus_source: false

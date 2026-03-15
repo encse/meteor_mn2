@@ -157,7 +157,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [376, 260.0]
+    coordinate: [376, 244.0]
     rotation: 0
     state: enabled
 - name: oqpsk_demodulator_0
@@ -173,7 +173,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [128, 244.0]
+    coordinate: [128, 260.0]
     rotation: 0
     state: enabled
 - name: pad_sink_0
@@ -317,7 +317,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [376, 196.0]
+    coordinate: [376, 172.0]
     rotation: 0
     state: enabled
 - name: pad_sink_1_0
@@ -353,7 +353,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [376, 356.0]
+    coordinate: [376, 340.0]
     rotation: 0
     state: enabled
 - name: pad_sink_1_1_0
@@ -371,7 +371,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [376, 428.0]
+    coordinate: [376, 412.0]
     rotation: 0
     state: enabled
 - name: pad_source_0
@@ -452,10 +452,10 @@ connections:
 - [ccsds_apid_filter_0_0_0_0_0_0_0, out, pad_sink_0_5, in]
 - [ccsds_channel_decoder_0, '0', pad_sink_1_0, '0']
 - [ccsds_channel_decoder_0, cadus, vcdu_parser_0, in]
+- [oqpsk_demodulator_0, '0', ccsds_channel_decoder_0, '0']
 - [oqpsk_demodulator_0, '0', pad_sink_1, '0']
-- [oqpsk_demodulator_0, '1', ccsds_channel_decoder_0, '0']
-- [oqpsk_demodulator_0, '2', pad_sink_1_1, '0']
-- [oqpsk_demodulator_0, '3', pad_sink_1_1_0, '0']
+- [oqpsk_demodulator_0, '1', pad_sink_1_1, '0']
+- [oqpsk_demodulator_0, '2', pad_sink_1_1_0, '0']
 - [pad_source_0, '0', oqpsk_demodulator_0, '0']
 - [space_packet_assembler_0, out, ccsds_apid_filter_0, in]
 - [space_packet_assembler_0, out, ccsds_apid_filter_0_0, in]

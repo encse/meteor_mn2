@@ -120,10 +120,10 @@ class meteor_lrpt(gr.hier_block2):
         self.msg_connect((self.space_packet_assembler_0, 'out'), (self.ccsds_apid_filter_0_0_0_0_0_0_0, 'in'))
         self.msg_connect((self.vcdu_parser_0, 'out'), (self.space_packet_assembler_0, 'in'))
         self.connect((self.ccsds_channel_decoder_0, 0), (self, 1))
-        self.connect((self.oqpsk_demodulator_0, 1), (self.ccsds_channel_decoder_0, 0))
+        self.connect((self.oqpsk_demodulator_0, 0), (self.ccsds_channel_decoder_0, 0))
         self.connect((self.oqpsk_demodulator_0, 0), (self, 0))
-        self.connect((self.oqpsk_demodulator_0, 2), (self, 2))
-        self.connect((self.oqpsk_demodulator_0, 3), (self, 3))
+        self.connect((self.oqpsk_demodulator_0, 1), (self, 2))
+        self.connect((self.oqpsk_demodulator_0, 2), (self, 3))
         self.connect((self, 0), (self.oqpsk_demodulator_0, 0))
 
 

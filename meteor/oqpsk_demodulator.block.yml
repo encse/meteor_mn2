@@ -15,10 +15,6 @@ inputs:
     vlen: 1
 
 outputs:
--   label: constellation
-    dtype: complex
-    vlen: 1
-    optional: true
 -   label: soft_symbols
     dtype: complex
     vlen: 1

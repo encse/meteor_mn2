@@ -227,7 +227,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [808, 572.0]
+    coordinate: [808, 484.0]
     rotation: 0
     state: enabled
 - name: digital_symbol_sync_xx_0
@@ -290,24 +290,6 @@ blocks:
     coordinate: [432, 16.0]
     rotation: 0
     state: enabled
-- name: pad_sink_0
-  id: pad_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    label: constellation
-    num_streams: '1'
-    optional: 'True'
-    type: complex
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [808, 404.0]
-    rotation: 0
-    state: enabled
 - name: pad_sink_0_0
   id: pad_sink
   parameters:
@@ -323,7 +305,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [808, 484.0]
+    coordinate: [808, 420.0]
     rotation: 0
     state: enabled
 - name: pad_sink_1
@@ -359,7 +341,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1096, 580.0]
+    coordinate: [1096, 492.0]
     rotation: 0
     state: enabled
 - name: pad_source_1
@@ -432,7 +414,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [968, 580.0]
+    coordinate: [968, 492.0]
     rotation: 0
     state: enabled
 - name: virtual_sink_0
@@ -475,7 +457,6 @@ connections:
 - [digital_costas_loop_cc_0, '3', blocks_null_sink_0_0, '0']
 - [digital_mpsk_snr_est_cc_0, '0', tag_value_to_float_0, '0']
 - [digital_symbol_sync_xx_0, '0', digital_mpsk_snr_est_cc_0, '0']
-- [digital_symbol_sync_xx_0, '0', pad_sink_0, '0']
 - [digital_symbol_sync_xx_0, '0', pad_sink_0_0, '0']
 - [fir_filter_xxx_1, '0', digital_costas_loop_cc_0, '0']
 - [pad_source_1, '0', rational_resampler_xxx_0, '0']

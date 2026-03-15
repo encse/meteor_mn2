@@ -30,7 +30,7 @@ class oqpsk_demodulator(gr.hier_block2):
         gr.hier_block2.__init__(
             self, "OQPSK Demodulator",
                 gr.io_signature(1, 1, gr.sizeof_gr_complex*1),
-                gr.io_signature.makev(4, 4, [gr.sizeof_gr_complex*1, gr.sizeof_gr_complex*1, gr.sizeof_float*1, gr.sizeof_float*1]),
+                gr.io_signature.makev(3, 3, [gr.sizeof_gr_complex*1, gr.sizeof_float*1, gr.sizeof_float*1]),
         )
 
         ##################################################
@@ -88,7 +88,7 @@ class oqpsk_demodulator(gr.hier_block2):
         self.connect((self.blocks_complex_to_float_0_0, 0), (self.blocks_float_to_complex_0_0, 0))
         self.connect((self.blocks_delay_0_0, 0), (self.blocks_float_to_complex_0_0, 1))
         self.connect((self.blocks_float_to_complex_0_0, 0), (self.digital_symbol_sync_xx_0, 0))
-        self.connect((self.blocks_multiply_const_vxx_0, 0), (self, 2))
+        self.connect((self.blocks_multiply_const_vxx_0, 0), (self, 1))
         self.connect((self.digital_costas_loop_cc_0, 0), (self.blocks_complex_to_float_0_0, 0))
         self.connect((self.digital_costas_loop_cc_0, 1), (self.blocks_multiply_const_vxx_0, 0))
         self.connect((self.digital_costas_loop_cc_0, 2), (self.blocks_null_sink_0, 0))
@@ -96,11 +96,10 @@ class oqpsk_demodulator(gr.hier_block2):
         self.connect((self.digital_mpsk_snr_est_cc_0, 0), (self.tag_value_to_float_0, 0))
         self.connect((self.digital_symbol_sync_xx_0, 0), (self.digital_mpsk_snr_est_cc_0, 0))
         self.connect((self.digital_symbol_sync_xx_0, 0), (self, 0))
-        self.connect((self.digital_symbol_sync_xx_0, 0), (self, 1))
         self.connect((self.fir_filter_xxx_1, 0), (self.digital_costas_loop_cc_0, 0))
         self.connect((self, 0), (self.rational_resampler_xxx_0, 0))
         self.connect((self.rational_resampler_xxx_0, 0), (self.analog_agc2_xx_0, 0))
-        self.connect((self.tag_value_to_float_0, 0), (self, 3))
+        self.connect((self.tag_value_to_float_0, 0), (self, 2))
 
 
     def get_sample_rate(self):

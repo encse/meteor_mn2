@@ -71,13 +71,13 @@ class oqpsk_demodulator(gr.hier_block2):
             [])
         self.digital_mpsk_snr_est_cc_0 = digital.mpsk_snr_est_cc(2, 10000, 0.001)
         self.digital_costas_loop_cc_0 = digital.costas_loop_cc(0.002, 4, False)
+        self.dc_blocker_xx_0 = filter.dc_blocker_cc(32, True)
         self.blocks_null_sink_0_0 = blocks.null_sink(gr.sizeof_float*1)
         self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_float*1)
-        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_ff((1.0 / (2.0 * 3.141592654) * pipeline_sample_rate))
         self.blocks_float_to_complex_0_0 = blocks.float_to_complex(1)
         self.blocks_delay_0_0 = blocks.delay(gr.sizeof_float*1, (sps // 2))
         self.blocks_complex_to_float_0_0 = blocks.complex_to_float(1)
-        self.analog_agc2_xx_0 = analog.agc2_cc((1e-1), (1e-2), 1.0, 1.0, 65536)
+        self.analog_agc2_xx_0 = analog.agc2_cc(0.01, 0.001, 0.5, 1.0, 0)
 
 
         ##################################################
@@ -88,17 +88,17 @@ class oqpsk_demodulator(gr.hier_block2):
         self.connect((self.blocks_complex_to_float_0_0, 0), (self.blocks_float_to_complex_0_0, 0))
         self.connect((self.blocks_delay_0_0, 0), (self.blocks_float_to_complex_0_0, 1))
         self.connect((self.blocks_float_to_complex_0_0, 0), (self.digital_symbol_sync_xx_0, 0))
-        self.connect((self.blocks_multiply_const_vxx_0, 0), (self, 1))
+        self.connect((self.dc_blocker_xx_0, 0), (self.analog_agc2_xx_0, 0))
         self.connect((self.digital_costas_loop_cc_0, 0), (self.blocks_complex_to_float_0_0, 0))
-        self.connect((self.digital_costas_loop_cc_0, 1), (self.blocks_multiply_const_vxx_0, 0))
-        self.connect((self.digital_costas_loop_cc_0, 2), (self.blocks_null_sink_0, 0))
-        self.connect((self.digital_costas_loop_cc_0, 3), (self.blocks_null_sink_0_0, 0))
+        self.connect((self.digital_costas_loop_cc_0, 1), (self.blocks_null_sink_0, 0))
+        self.connect((self.digital_costas_loop_cc_0, 2), (self.blocks_null_sink_0_0, 0))
+        self.connect((self.digital_costas_loop_cc_0, 3), (self, 1))
         self.connect((self.digital_mpsk_snr_est_cc_0, 0), (self.tag_value_to_float_0, 0))
         self.connect((self.digital_symbol_sync_xx_0, 0), (self.digital_mpsk_snr_est_cc_0, 0))
         self.connect((self.digital_symbol_sync_xx_0, 0), (self, 0))
         self.connect((self.fir_filter_xxx_1, 0), (self.digital_costas_loop_cc_0, 0))
         self.connect((self, 0), (self.rational_resampler_xxx_0, 0))
-        self.connect((self.rational_resampler_xxx_0, 0), (self.analog_agc2_xx_0, 0))
+        self.connect((self.rational_resampler_xxx_0, 0), (self.dc_blocker_xx_0, 0))
         self.connect((self.tag_value_to_float_0, 0), (self, 2))
 
 
@@ -128,6 +128,5 @@ class oqpsk_demodulator(gr.hier_block2):
 
     def set_pipeline_sample_rate(self, pipeline_sample_rate):
         self.pipeline_sample_rate = pipeline_sample_rate
-        self.blocks_multiply_const_vxx_0.set_k((1.0 / (2.0 * 3.141592654) * self.pipeline_sample_rate))
         self.fir_filter_xxx_1.set_taps(firdes.root_raised_cosine(1.0, self.pipeline_sample_rate, self.sym_rate, alpha=0.5, ntaps=31))
 
